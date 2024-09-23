@@ -1,6 +1,4 @@
-
-  
-  // The provided course information.
+// The provided course information.
   export const CourseInfo = {
     id: 451,
     name: "Introduction to JavaScript",

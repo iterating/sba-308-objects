@@ -80,35 +80,52 @@ console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions));
 // Display in HTML table
 export function displayLearnerData(course, ag, submissions) {
   const tableBody = document.querySelector("#learnerTable tbody");
+  const tableHead = document.querySelector("#learnerTable thead tr");
 
-  tableBody.innerHTML = ""
+  if (!tableBody || !tableHead) {
+    console.error("Table body or header not found!");
+    return;
+  }
+
+  tableBody.innerHTML = ""; 
+  tableHead.innerHTML = `<th>LearnerID</th><th>Course Name</th><th>Avg</th>`; // Reset header
+
+  // Add assignment headers
+  ag.assignments.forEach(assignment => {
+    const assignmentHeader = document.createElement("th");
+    assignmentHeader.textContent = `Assignment ${assignment.id}`;
+    tableHead.appendChild(assignmentHeader);
+  });
+
   const learnersData = getLearnerData(course, ag, submissions);
 
-  learnersData.forEach((learner) => {
+  learnersData.forEach(learner => {
     const row = document.createElement("tr");
 
+    // Learner ID
     const idCell = document.createElement("td");
     idCell.textContent = learner.id;
     row.appendChild(idCell);
 
+    // Course Name
     const courseNameCell = document.createElement("td");
     courseNameCell.textContent = course.name;
     row.appendChild(courseNameCell);
 
-
-    ag.assignments.forEach((assignment) => {
-      const assignmentCell = document.createElement("td");
-      const score = learner[assignment.id.toFixed(1)];
-      // Display N/A if assignment isnt posted
-      assignmentCell.textContent = score ? score : "N/A";
-      row.appendChild(assignmentCell);
-    });
-
-    const avgCell = document.createElement("td");
-    avgCell.textContent = learner.avg
+    // Average score
+    const avgCell = document.createElement("td")
+    avgCell.textContent = (learner.avg * 100).toFixed(1) + "%";
     row.appendChild(avgCell);
 
+    // Assignment scores
+    ag.assignments.forEach(assignment => {
+      const scoreCell = document.createElement("td");
+      const score = learner[assignment.id.toFixed(1)];
+      scoreCell.textContent = score !== undefined ? (score * 100).toFixed(0) + "%" : "N/A";
+      row.appendChild(scoreCell);
+    });
+
+    // Append the row to the table body
     tableBody.appendChild(row);
   });
 }
-

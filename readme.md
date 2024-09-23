@@ -73,9 +73,15 @@ You will create a script that gathers data, processes it, and then outputs a con
 # Requirements
 The requirements listed here are absolute minimums. Ensure that your application meets these requirements before attempting to further expand your features.
 Create your application locally, and initialize a local git repo. Make frequent commits to the repo. When your application is complete, push your repo to GitHub and submit the link to the GitHub page using the submission instructions at the top of this document.
-- [ ] Reflection (Optional)
+- [x] Reflection (Optional)
 Once you have completed your project, answer the following questions to help solidify your understanding of the process and its outcomes, as well as improve your ability to handle similar tasks in the future.
-What could you have done differently during the planning stages of your project to make the execution easier?
-Were there any requirements that were difficult to implement? What do you think would make them easier to implement in future projects?
-What would you add to, or change about your application if given more time?
-Use this space to make notes for your future self about anything that you think is important to remember about this process, or that may aid you when attempting something similar again:
+_What could you have done differently during the planning stages of your project to make the execution easier?_
+- 
+
+_Were there any requirements that were difficult to implement? What do you think would make them easier to implement in future projects?_
+- Making the userID and avg the first key:value pairs in the learnerData object was very challenging. I the end, I used toFixed(1) on the assignment IDs to make them display after the userID and avg. I believe there is some sort of automatic collation sorting for key:value pairs in objects. In the future I will use toFixed(1) on numerical keys to have them display after other keys.  
+
+_What would you add to, or change about your application if given more time?_
+- Given more time, I would use typescript to enforce data types. 
+
+_Use this space to make notes for your future self about anything that you think is important to remember about this process, or that may aid you when attempting something similar again:_
