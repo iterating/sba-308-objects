@@ -15,6 +15,19 @@ function getLearners(submissions) {
   return learners;
 }
 
+// Refactored calculatePoints as separate function
+function calculatePoints(element, assignment) {
+  let submitDate = new Date(element.submission.submitted_at);
+  let dueDate = new Date(assignment.due_at);
+  let pointsEarned = element.submission.score;
+
+  // Late submission penalty
+  if (submitDate > dueDate) {
+    pointsEarned *= 0.9
+  }
+  return pointsEarned;
+}
+
 function getLearnerData(course, ag, submissions) {
   try {
     if (ag.course_id !== course.id) {
@@ -38,29 +51,12 @@ function getLearnerData(course, ag, submissions) {
           // Go through each assignment, match the assignment_id, add scores to total
           for (let i = 0; i < ag.assignments.length; i++) {
             if (ag.assignments[i].id === element.assignment_id) {
-              //check due date
-
-              console.log(`learner ID ` + learner_id);
-              let submitDate = new Date(element.submission.submitted_at);
-              // console.log(`submitDate ` + submitDate);
-              let dueDate = new Date(ag.assignments[i].due_at);
-              // console.log(`dueDate ` + dueDate);
-
-              // 10% off for late submission
-              if (submitDate > dueDate) {
-                pointsEarned += element.submission.score * 0.9;
-                console.log(`late earned ` + pointsEarned);
-              } else {
-              pointsEarned += element.submission.score;
-              console.log(`earned ` + pointsEarned);
-            }
-            pointsPossible += ag.assignments[i].points_possible;
-            console.log(`possible ` + pointsPossible);
+              pointsEarned += calculatePoints(element, ag.assignments[i]);
+              pointsPossible += ag.assignments[i].points_possible;
           }
         }
       }
       });
-
       // Check if pointsPossible is greater than 0
       if (pointsPossible > 0) {
         learnerData.avg = pointsEarned / pointsPossible;
