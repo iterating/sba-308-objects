@@ -1,9 +1,4 @@
-// import type { learnerProfile, AssignmentGroup, AssignmentInfo, LearnerSubmission, LearnerSubmissions } from "./dataTypes";
-import {
-  CourseInfo,
-  AssignmentGroup,
-  LearnerSubmissions,
-} from "./src/index.mjs";
+import { CourseInfo, AssignmentGroup, LearnerSubmissions } from "./index.mjs";
 
 function getLearners(submissions) {
   const learners = [];
@@ -23,7 +18,7 @@ function calculatePoints(element, assignment) {
 
   // Late submission penalty
   if (submitDate > dueDate) {
-    pointsEarned *= 0.9
+    pointsEarned *= 0.9;
   }
   return pointsEarned;
 }
@@ -44,6 +39,7 @@ function getLearnerData(course, ag, submissions) {
       };
       let pointsEarned = 0;
       let pointsPossible = 0;
+      const assignmentScores = {};
       // Check each submission
       submissions.forEach((element) => {
         // Check if learner_id matches
@@ -53,24 +49,26 @@ function getLearnerData(course, ag, submissions) {
             if (ag.assignments[i].id === element.assignment_id) {
               pointsEarned += calculatePoints(element, ag.assignments[i]);
               pointsPossible += ag.assignments[i].points_possible;
-              learnerData[ag.assignments[i].id] = calculatePoints(element, ag.assignments[i]) / ag.assignments[i].points_possible;
-
+              // Spent a long time trying to get the score keys to the enf of my object not the beginning. Works with toFixed
+              learnerData[`${ag.assignments[i].id.toFixed(1)}`] =
+                calculatePoints(element, ag.assignments[i]) /
+                ag.assignments[i].points_possible;
+            }
           }
         }
-      }
       });
       // Check if pointsPossible is greater than 0
       if (pointsPossible > 0) {
-        learnerData.avg = pointsEarned / pointsPossible;
-        learnersArray.push(learnerData);
+        learnerData.avg = (pointsEarned / pointsPossible).toFixed(3);
 
+        learnersArray.push(learnerData);
       } else {
         throw new Error(
           `Total points possible cannot be zero or less for learner ID ${learner_id}`
         );
       }
     });
-    
+
     return learnersArray;
   } catch (error) {
     console.error(error.message);

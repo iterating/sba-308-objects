@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",                // or another target of your choice
+      "module": "ESNext",             // Use "esnext" or "commonjs" depending on your setup
+      "esModuleInterop": true,        // Enables emit interoperability between CommonJS and ES Modules
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "allowImportingTsExtensions": true,
+      "noEmit": true  
+    },
+    "include": ["**/*.ts", "index.mjs", "learnerData.mjs", "dataTypes.ts"],           // Include all TypeScript files in your project
+    "exclude": ["node_modules"]       // Exclude the node_modules folder
+  }
+  
