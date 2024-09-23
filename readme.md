@@ -67,7 +67,7 @@ You will create a script that gathers data, processes it, and then outputs a con
 - [x] You should also account for potential errors in the data that your program receives. What if points_possible is 0? You cannot divide by zero. What if a value that you are expecting to be a number is instead a string? 
 - [x] Use try/catch and other logic to handle these types of errors gracefully.
 - [x] If an assignment is not yet due, do not include it in the results or the average. 
-- [ ] Additionally, if the learner’s submission is late (submitted_at is past due_at), deduct 10 percent of the total points possible from their score for that assignment.
+- [x] Additionally, if the learner’s submission is late (submitted_at is past due_at), deduct 10 percent of the total points possible from their score for that assignment.
 - [x] Create a function named getLearnerData() that accepts these values as parameters, in the order listed: (CourseInfo, AssignmentGroup, [LearnerSubmission]), and returns the formatted result, which should be an array of objects as described above.
 - [x] - You may use as many helper functions as you see fit.
 # Requirements
