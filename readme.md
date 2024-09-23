@@ -1,3 +1,6 @@
+[Source](https://github.com/iterating/sba-308-objects/blob/main/learnerData.mjs)  
+[Live output](https://iterating.github.io/sba-308-objects)  
+
 # Objectives
 - [x] Employ basic JavaScript syntax accurately.
 - [x] Implement control flow structures such as conditionals and loops effectively.
