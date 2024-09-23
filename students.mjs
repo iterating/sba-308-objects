@@ -53,6 +53,8 @@ function getLearnerData(course, ag, submissions) {
             if (ag.assignments[i].id === element.assignment_id) {
               pointsEarned += calculatePoints(element, ag.assignments[i]);
               pointsPossible += ag.assignments[i].points_possible;
+              learnerData[ag.assignments[i].id] = calculatePoints(element, ag.assignments[i]) / ag.assignments[i].points_possible;
+
           }
         }
       }
@@ -61,12 +63,14 @@ function getLearnerData(course, ag, submissions) {
       if (pointsPossible > 0) {
         learnerData.avg = pointsEarned / pointsPossible;
         learnersArray.push(learnerData);
+
       } else {
         throw new Error(
           `Total points possible cannot be zero or less for learner ID ${learner_id}`
         );
       }
     });
+    
     return learnersArray;
   } catch (error) {
     console.error(error.message);
