@@ -8,7 +8,7 @@
       "allowImportingTsExtensions": true,
       "noEmit": true  
     },
-    "include": ["**/*.ts", "index.mjs", "learnerData.mjs", "dataTypes.ts"],           // Include all TypeScript files in your project
+    "include": ["**/*.ts", "src/index.mjs", "learnerData.mjs", "src/dataTypes.ts"],           // Include all TypeScript files in your project
     "exclude": ["node_modules"]       // Exclude the node_modules folder
   }
   

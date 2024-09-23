@@ -4,8 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Progress</title>
+    <style>
+            th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid;
+        }
+
+    </style>
 </head>
 <body>
-    
+
+    <h1>Learner Data</h1>
+    <table id="learnerTable">
+        <thead>
+            <tr>
+                <th>Learner ID</th>
+                <th>Course Name</th>
+                <th>Assignment 1</th>
+                <th>Assignment 2</th>
+                <th>Assignment 3</th>
+                <th>Average</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+<script type="module">
+import { CourseInfo, AssignmentGroup, LearnerSubmissions } from "./src/index.mjs";
+import { getLearners, calculatePoints, getLearnerData, displayLearnerData } from "./learnerData.mjs"
+
+document.addEventListener("DOMContentLoaded", function() {
+  displayLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+});
+</script>
 </body>
 </html>

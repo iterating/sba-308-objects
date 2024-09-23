@@ -1,6 +1,6 @@
-import { CourseInfo, AssignmentGroup, LearnerSubmissions } from "./index.mjs";
+import { CourseInfo, AssignmentGroup, LearnerSubmissions } from "./src/index.mjs";
 
-function getLearners(submissions) {
+export function getLearners(submissions) {
   const learners = [];
   submissions.forEach((element) => {
     if (!learners.includes(element.learner_id)) {
@@ -11,7 +11,7 @@ function getLearners(submissions) {
 }
 
 // Refactored calculatePoints as separate function
-function calculatePoints(element, assignment) {
+export function calculatePoints(element, assignment) {
   let submitDate = new Date(element.submission.submitted_at);
   let dueDate = new Date(assignment.due_at);
   let pointsEarned = element.submission.score;
@@ -23,7 +23,7 @@ function calculatePoints(element, assignment) {
   return pointsEarned;
 }
 
-function getLearnerData(course, ag, submissions) {
+export function getLearnerData(course, ag, submissions) {
   try {
     if (ag.course_id !== course.id) {
       throw new Error("Course IDs does not match");
@@ -50,7 +50,7 @@ function getLearnerData(course, ag, submissions) {
               pointsEarned += calculatePoints(element, ag.assignments[i]);
               pointsPossible += ag.assignments[i].points_possible;
               // Spent a long time trying to get the score keys to the enf of my object not the beginning. Works with toFixed
-              learnerData[`${ag.assignments[i].id.toFixed(1)}`] =
+              learnerData[ag.assignments[i].id.toFixed(1)] =
                 calculatePoints(element, ag.assignments[i]) /
                 ag.assignments[i].points_possible;
             }
@@ -76,3 +76,39 @@ function getLearnerData(course, ag, submissions) {
 }
 
 console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions));
+
+// Display in HTML table
+export function displayLearnerData(course, ag, submissions) {
+  const tableBody = document.querySelector("#learnerTable tbody");
+
+  tableBody.innerHTML = ""
+  const learnersData = getLearnerData(course, ag, submissions);
+
+  learnersData.forEach((learner) => {
+    const row = document.createElement("tr");
+
+    const idCell = document.createElement("td");
+    idCell.textContent = learner.id;
+    row.appendChild(idCell);
+
+    const courseNameCell = document.createElement("td");
+    courseNameCell.textContent = course.name;
+    row.appendChild(courseNameCell);
+
+
+    ag.assignments.forEach((assignment) => {
+      const assignmentCell = document.createElement("td");
+      const score = learner[assignment.id.toFixed(1)];
+      // Display N/A if assignment isnt posted
+      assignmentCell.textContent = score ? score : "N/A";
+      row.appendChild(assignmentCell);
+    });
+
+    const avgCell = document.createElement("td");
+    avgCell.textContent = learner.avg
+    row.appendChild(avgCell);
+
+    tableBody.appendChild(row);
+  });
+}
+
